@@ -1,7 +1,0 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
- 
-  <groupId>wisp</groupId>
-  <artifactId>questgiver</artifactId>
-  <version>4.0.0</version>
-</project>

@@ -46,6 +46,10 @@ class Telos3EscapedDialog(
         optionConfigurator = { options ->
             options.map { option ->
                 when (option.id) {
+                    "endOfPhase2" -> option.copy(onOptionSelected = {
+                        it.close(doNotOfferAgain = true)
+                    })
+
                     else -> option
                 }
             }

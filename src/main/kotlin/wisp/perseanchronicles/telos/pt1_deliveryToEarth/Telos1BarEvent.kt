@@ -21,7 +21,7 @@ class Telos1BarEventLogic(
     onInteractionStarted = {
         dialog.visualPanel.showMapMarker(
             Telos1HubMission.state.karengoSystem?.hyperspaceAnchor,
-            TextToStartInteractionFromJson<Telos1BarEventLogic>(
+            TextToStartInteractionFromJson<BarEventLogic<Telos1HubMission>>(
                 barEventJson = stageJson.getJSONObject("barEvent")
             ).invoke(
                 this as Telos1BarEventLogic

@@ -28,6 +28,7 @@ import wisp.perseanchronicles.telos.TelosCommon
 import wisp.perseanchronicles.telos.pt1_deliveryToEarth.Telos1HubMission
 import wisp.perseanchronicles.telos.pt2_dart.Telos2HubMission
 import wisp.questgiver.v2.IInteractionLogic
+import wisp.questgiver.v2.IQGHubMission
 import wisp.questgiver.v2.QGHubMission
 import wisp.questgiver.v2.json.query
 import wisp.questgiver.v2.spriteName
@@ -35,7 +36,7 @@ import wisp.questgiver.wispLib.*
 import java.awt.Color
 
 
-class Telos3HubMission : QGHubMission(), FleetEventListener {
+class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
     companion object {
         // Hardcode because it's being used in rules.csv.
         val MISSION_ID = "wisp_perseanchronicles_telosPt3"
@@ -112,7 +113,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener {
 
         // Ignore warning, there are two overrides and it's complaining about just one of them.
         @Suppress("ABSTRACT_SUPER_CALL_WARNING")
-        super.create(createdAt, barEvent)
+        super<IQGHubMission>.create(createdAt, barEvent)
         // Set his sprite in case he was created during Phase 1, before the new sprite was set.
         PerseanChroniclesNPCs.captainEugel.portraitSprite =
             IInteractionLogic.Portrait(category = "wisp_perseanchronicles_telos", id = "eugel_portrait").spriteName(game)
@@ -374,8 +375,8 @@ class Telos3HubMission : QGHubMission(), FleetEventListener {
     // Detect Eugel fleet destruction
     override fun reportBattleOccurred(fleet: CampaignFleetAPI?, primaryWinner: CampaignFleetAPI?, battle: BattleAPI?) {
         battle ?: return
-        val eugelFleetBefore = battle.nonPlayerSideSnapshot.firstOrNull { it.commander?.id == PerseanChroniclesNPCs.captainEugel.id }
-        val eugelFleetNow = battle.nonPlayerSide.firstOrNull { eugelFleetBefore?.id == it.id }
+        val eugelFleetBefore = battle.nonPlayerSideSnapshot?.firstOrNull { it.commander?.id == PerseanChroniclesNPCs.captainEugel.id }
+        val eugelFleetNow = battle.nonPlayerSide?.firstOrNull { eugelFleetBefore?.id == it.id }
 
         if (eugelFleetBefore == null) return
 

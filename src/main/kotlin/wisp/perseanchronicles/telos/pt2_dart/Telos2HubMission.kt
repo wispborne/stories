@@ -27,12 +27,13 @@ import wisp.perseanchronicles.telos.pt1_deliveryToEarth.Telos1HubMission
 import wisp.perseanchronicles.telos.pt2_dart.battle.Telos2PirateFleetInteractionDialogPluginImpl
 import wisp.questgiver.InteractionDefinition
 import wisp.questgiver.spriteName
+import wisp.questgiver.v2.IQGHubMission
 import wisp.questgiver.v2.QGHubMission
 import wisp.questgiver.v2.json.query
 import wisp.questgiver.wispLib.*
 import java.awt.Color
 
-class Telos2HubMission : QGHubMission() {
+class Telos2HubMission : QGHubMission(), IQGHubMission {
     companion object {
         // Hardcode because it's being used in rules.csv.
         val MISSION_ID = "wisp_perseanchronicles_telosPt2"
@@ -105,7 +106,7 @@ class Telos2HubMission : QGHubMission() {
 
         // Ignore warning, there are two overrides and it's complaining about just one of them.
         @Suppress("ABSTRACT_SUPER_CALL_WARNING")
-        super.create(createdAt, barEvent)
+        super<IQGHubMission>.create(createdAt, barEvent)
         setGenRandom(Telos1HubMission.state.seed ?: Misc.random)
 
         setStartingStage(Stage.DestroyFleet)

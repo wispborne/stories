@@ -13,7 +13,7 @@ val props = Properties().apply {
 val modVersion = "3.1.0"
 val starsectorDirectory = props.getProperty("gamePath") //"C:/Program Files (x86)/Fractal Softworks/Starsector"
 val jarFileName = "PerseanChronicles.jar"
-val questgiverVersion = "4.0.0"
+val questgiverVersion = "4.1.0"
 
 val modId = "wisp_perseanchronicles"
 val modName = "Persean Chronicles"
@@ -31,7 +31,7 @@ val starsectorCoreDirectory = props["gameCorePath"] ?: "${starsectorDirectory}/s
 val starsectorModDirectory = props["modsPath"] ?: "${starsectorDirectory}/mods"
 
 plugins {
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm") version "1.9.23"
     java
 }
 
@@ -232,11 +232,10 @@ sourceSets {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
-// Compile to Java 6 bytecode so that Starsector can use it
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.6"
+    kotlinOptions.jvmTarget = "17"
 }
