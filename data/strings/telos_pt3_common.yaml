@@ -757,17 +757,20 @@ wisp_perseanchronicles:
             - id: '3-fatherKnowsBest'
               paras:
                 - 'After a moment, he nods, clearly deciding not to push his luck with more questions. The bridge resumes its usual calm, competent activity, the matter resolved.'
-              goToPage: '4-cliffhanger'
+              onPageShown:
+                goToPage: '4-cliffhanger'
 
             - id: '3-explanation'
               response-zigg: 'The man pales. "First that phase ship, now this. We find strange and dangerous machinery, ${PlayerSirOrMadam}.'
               response-noZigg: 'The man pales, then smiles grimly. "Better you than me, ${PlayerSirOrMadam}. It''s an honor to serve.'
-              goToPage: '3-explanation-finish'
+              onPageShown:
+                goToPage: '3-explanation-finish'
 
             - id: '3-explanation-finish'
               paras:
                 - 'He returns to his console, pointedly not asking anything further. The rest of the bridge takes his lead and resumes its usual calm, competent activity, the matter resolved.'
-              goToPage: '4-cliffhanger'
+              onPageShown:
+                goToPage: '4-cliffhanger'
 
             - id: '4-cliffhanger'
               text: '==This concludes Phase 2 of the Telos storyline. More to come at a later date.=='
