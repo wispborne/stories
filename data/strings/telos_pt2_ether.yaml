@@ -109,7 +109,7 @@ wisp_perseanchronicles:
 
             - id: '8-vara-inside'
               paras:
-                - 'With Karengo in the lead, you step over the threshold. Hidden lighting
+                - 'With Karengo in the lead, you step over the threshold, through the airlock, and into the pressured interior. Hidden lighting
                   softly illuminates a polished corridor leading into the depths.'
               options:
                 - text: 'Explore the ship'

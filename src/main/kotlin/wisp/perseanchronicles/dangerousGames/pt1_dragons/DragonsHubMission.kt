@@ -6,6 +6,9 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.missions.hub.BaseHubMission
+import com.fs.starfarer.api.impl.campaign.missions.hub.MissionTrigger
+import com.fs.starfarer.api.impl.campaign.missions.hub.MissionTrigger.TriggerAction
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
@@ -134,9 +137,14 @@ class DragonsHubMission : QGHubMissionWithBarEvent(missionId = MISSION_ID) {
 
         trigger {
             beginStageTrigger(Stage.ReturnedToStart)
-            triggerCustomAction {
-                setCreditReward(creditsReward + 5000) // Add 5000 credits to reward as other dragonriders' share.
-            }
+            triggerCustomAction(SetCreditRewardAction())
+        }
+    }
+
+    class SetCreditRewardAction : TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext?) {
+            val mission = context?.mission as? BaseHubMission
+            mission?.setCreditReward(mission.creditsReward + 5000) // Add 5000 credits to reward as other dragonriders' share.
         }
     }
 

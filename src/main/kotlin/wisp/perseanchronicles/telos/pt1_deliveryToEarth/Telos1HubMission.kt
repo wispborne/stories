@@ -8,6 +8,8 @@ import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.missions.hub.MissionTrigger
+import com.fs.starfarer.api.impl.campaign.missions.hub.MissionTrigger.TriggerAction
 import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -148,11 +150,14 @@ class Telos1HubMission : QGHubMissionWithBarEvent(MISSION_ID) {
         // Complete Part 1, show conclusion dialog.
         trigger {
             beginWithinHyperspaceRangeTrigger(state.karengoSystem, 1f, true, Stage.GoToSectorEdge)
+            triggerCustomAction(OnReachedSectorEdge())
+        }
+    }
 
-            triggerCustomAction {
-                Telo1CompleteDialog().build().show(game.sector.campaignUI, game.sector.playerFleet)
-                game.sector.playerFleet.clearAssignments()
-            }
+    class OnReachedSectorEdge : TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext?) {
+            Telo1CompleteDialog().build().show(game.sector.campaignUI, game.sector.playerFleet)
+            game.sector.playerFleet.clearAssignments()
         }
     }
 

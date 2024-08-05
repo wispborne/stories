@@ -11,6 +11,7 @@ import com.fs.starfarer.api.fleet.FleetMemberType
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.Tags
+import com.fs.starfarer.api.impl.campaign.missions.hub.MissionTrigger
 import com.fs.starfarer.api.impl.campaign.rulecmd.AddRemoveCommodity
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
@@ -147,12 +148,16 @@ class Telos2HubMission : QGHubMission(), IQGHubMission {
         // When you land on the planet, Karengo joins your fleet.
         trigger {
             beginStageTrigger(Stage.LandOnPlanetFirst)
-            triggerCustomAction {
-                PerseanChroniclesNPCs.isKarengoInFleet = true
-            }
+            triggerCustomAction(SetKarengoInFleetAction())
         }
 
         return true
+    }
+
+    class SetKarengoInFleetAction : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext?) {
+            PerseanChroniclesNPCs.isKarengoInFleet = true
+        }
     }
 
     override fun acceptImpl(dialog: InteractionDialogAPI?, memoryMap: MutableMap<String, MemoryAPI>?) {

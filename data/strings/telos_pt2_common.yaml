@@ -26,8 +26,7 @@ wisp_perseanchronicles:
                   in the - admittedly unreliable - fleet datastore.'
                 - 'As you step outside, still pondering the ruins, your thoughts are interrupted
                   by Karengo himself, striding purposefully toward the cooling shuttle
-                  in his weathered duster - confirming the ship instruments’ classification
-                  of the atmosphere as “env-suit optional.”'
+                  in an orange high-vis vacsuit.”'
               options:
                 - text: 'Continue'
                   goToPage: '1.5'
@@ -107,7 +106,7 @@ wisp_perseanchronicles:
                 - "“My source says this here was a ==Telos== base.”"
                 - 'At your blank look, he continues. “Telos…one of the old Tri-Tachyon
                   research branches the Hegemony erased. They created this Ether goo”
-                  - he taps a finger against the gray tube - “then left to live out away
+                  - he taps a gloved finger against the gray tube - “then left to live out away
                   from the Core Worlds. And then the Hegemony hunted ‘em down and purged
                   ‘em from history. Gone.”'
               options:
@@ -125,7 +124,7 @@ wisp_perseanchronicles:
                 goToPage: '3'
             - id: '7'
               paras:
-                - 'You sink the plunger deep into your right leg. The gray liquid drains
+                - 'You stab the plunger through a suit joint and deep into your right leg. The gray liquid drains
                   from the barrel and you feel a wave of cold spreading from the site.
                   Karengo watches intently, uncharacteristically quiet, as you take a
                   seat on a stair and wait.'
@@ -171,8 +170,7 @@ wisp_perseanchronicles:
                   goToPage: '11'
             - id: '10'
               paras:
-                - 'You shrug casually at Karengo’s confusion. For the first time since
-                  you met, you’re a step ahead of the adventurer. You take a moment
+                - 'You shrug casually at Karengo’s confusion, taking the extra moment
                   to savor it.'
               options:
                 - text: 'Continue'
@@ -208,9 +206,9 @@ wisp_perseanchronicles:
             - id: '12'
               paras:
                 - 'Karengo tucks his syringe of Ether into one of the endless pockets
-                  in his tactical jacket and you follow suit, the cylinder pressing against
+                  in his adventuring vacsuit and you follow suit, the cylinder pressing against
                   your ribs. “According to my contact,” he says, glancing around, “there
-                  is tunnel access to a hangar from this room.” At your raised eyebrows,
+                  is tunnel access to a hangar from this room.” At your querying look,
                   he adds, “Somewhere.”'
               options:
                 - text: 'Continue'

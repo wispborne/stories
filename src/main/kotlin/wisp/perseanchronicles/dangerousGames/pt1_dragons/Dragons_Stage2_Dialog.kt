@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global
 import org.magiclib.achievements.MagicAchievementManager
 import wisp.perseanchronicles.achievements.Achievements
 import wisp.perseanchronicles.game
+import wisp.questgiver.isPopulated
 import wisp.questgiver.v2.IInteractionLogic
 import wisp.questgiver.v2.InteractionDialogLogic
 import wisp.questgiver.wispLib.empty
@@ -141,5 +142,5 @@ class Dragons_Stage2_Dialog(val dragons: DragonsHubMission = Global.getSector().
         TakeOff
     }
 
-    private fun isPlanetColonized() = (DragonsHubMission.state.dragonPlanet?.market?.size ?: 0) > 0
+    private fun isPlanetColonized() = DragonsHubMission.state.dragonPlanet?.market.isPopulated()
 }

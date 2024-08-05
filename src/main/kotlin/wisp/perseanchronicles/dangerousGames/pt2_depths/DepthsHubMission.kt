@@ -15,6 +15,7 @@ import wisp.perseanchronicles.common.PerseanChroniclesNPCs
 import wisp.perseanchronicles.dangerousGames.pt1_dragons.DragonsHubMission
 import wisp.perseanchronicles.game
 import wisp.perseanchronicles.isOkForQuest
+import wisp.questgiver.isPopulated
 import wisp.questgiver.starSystemsAllowedForQuests
 import wisp.questgiver.v2.IInteractionLogic
 import wisp.questgiver.v2.QGHubMissionWithBarEvent
@@ -88,7 +89,7 @@ class DepthsHubMission : QGHubMissionWithBarEvent(missionId = MISSION_ID) {
     val didAllCrewDie: Boolean
         get() = riddleAnswers.all { it?.wasSuccessful() == false }
 
-    fun isPlanetColonized() = (state.depthsPlanet?.market?.size ?: 0) > 0
+    fun isPlanetColonized() = state.depthsPlanet?.market.isPopulated()
 
     override fun updateTextReplacements(text: Text) {
         text.globalReplacementGetters["dragonPlanet"] = { DragonsHubMission.state.dragonPlanet?.name }
@@ -371,7 +372,7 @@ class DepthsHubMission : QGHubMissionWithBarEvent(missionId = MISSION_ID) {
                                     add(planet, 3f)
                                 }
 
-                                planet.market?.size == 0 -> {
+                                planet.market.isPopulated() -> {
                                     game.logger.i { "Adding uninhabited planet ${planet.fullName} in ${planet.starSystem.baseName} to Depths candidate list" }
                                     add(planet, 2f)
                                 }

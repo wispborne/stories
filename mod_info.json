@@ -5,9 +5,9 @@
     "author": "Wisp",
     "utility": "false",
     "version": "3.1.0",
-    "description": "Adds a small collection of quests to bars around the Persean Sector.",
+    "description": "Adds a collection of quests to bars around the Persean Sector.",
     "gameVersion": "0.97a-RC7",
-    "jars":["jars/PerseanChronicles.jar", "libs/wisp/questgiver/4.1.0/Questgiver-4.1.0.jar"],
+    "jars":["jars/PerseanChronicles.jar"],
     "modPlugin":"wisp.perseanchronicles.PerseanChroniclesModPlugin",
     "dependencies": [
         {

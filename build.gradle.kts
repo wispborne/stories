@@ -13,14 +13,15 @@ val props = Properties().apply {
 val modVersion = "3.1.0"
 val starsectorDirectory = props.getProperty("gamePath") //"C:/Program Files (x86)/Fractal Softworks/Starsector"
 val jarFileName = "PerseanChronicles.jar"
-val questgiverVersion = "4.1.0"
+//val questgiverVersion = "4.1.0"
 
 val modId = "wisp_perseanchronicles"
 val modName = "Persean Chronicles"
 val author = "Wisp"
-val modDescription = "Adds a small collection of quests to bars around the Persean Sector."
+val modDescription = "Adds a collection of quests to bars around the Persean Sector."
 val gameVersion = "0.97a-RC7"
-val jars = arrayOf("jars/PerseanChronicles.jar", "libs/wisp/questgiver/$questgiverVersion/Questgiver-$questgiverVersion.jar")
+//val jars = arrayOf("jars/PerseanChronicles.jar", "libs/wisp/questgiver/$questgiverVersion/Questgiver-$questgiverVersion.jar")
+val jars = arrayOf("jars/PerseanChronicles.jar")
 val modPlugin = "wisp.perseanchronicles.PerseanChroniclesModPlugin"
 val isUtilityMod = false
 val masterVersionFile = "https://raw.githubusercontent.com/wispborne/stories/master/$modId.version"
@@ -74,7 +75,7 @@ dependencies {
 
     // This grabs local files from the /libs folder, see `repositories` block.
     compileOnly("starfarer:starfarer-api:1.0.0")
-    compileOnly("wisp:questgiver:$questgiverVersion")
+//    compileOnly("wisp:questgiver:$questgiverVersion")
 
     // Starsector jars and dependencies
     compileOnly(fileTree(starsectorCoreDirectory) {
@@ -232,8 +233,9 @@ sourceSets {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 tasks.withType<KotlinCompile> {

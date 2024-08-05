@@ -12,10 +12,12 @@ import com.fs.starfarer.api.impl.campaign.ids.FleetTypes
 import com.fs.starfarer.api.impl.campaign.ids.MemFlags
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.missions.hub.HubMissionWithSearch.PlanetIsPopulatedReq
+import com.fs.starfarer.api.impl.campaign.missions.hub.MissionTrigger
 import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
+import com.fs.starfarer.campaign.JumpPoint
 import com.fs.starfarer.campaign.fleet.CampaignFleet
 import org.json.JSONObject
 import org.magiclib.achievements.MagicAchievementManager
@@ -27,6 +29,7 @@ import wisp.perseanchronicles.game
 import wisp.perseanchronicles.telos.TelosCommon
 import wisp.perseanchronicles.telos.pt1_deliveryToEarth.Telos1HubMission
 import wisp.perseanchronicles.telos.pt2_dart.Telos2HubMission
+import wisp.perseanchronicles.telos.pt3_arrow.Telos3HubMission.Stage.*
 import wisp.questgiver.v2.IInteractionLogic
 import wisp.questgiver.v2.IQGHubMission
 import wisp.questgiver.v2.QGHubMission
@@ -119,9 +122,9 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
             IInteractionLogic.Portrait(category = "wisp_perseanchronicles_telos", id = "eugel_portrait").spriteName(game)
         setGenRandom(Telos1HubMission.state.seed ?: Misc.random)
 
-        setStartingStage(Stage.GoToPlanet)
-        addSuccessStages(Stage.Completed, Stage.CompletedSacrificeShips)
-        setAbandonStage(Stage.Abandoned)
+        setStartingStage(GoToPlanet)
+        addSuccessStages(Completed, CompletedSacrificeShips)
+        setAbandonStage(Abandoned)
 
         name = part3Json.query("/strings/title")
         personOverride = PerseanChroniclesNPCs.karengo // Shows on intel, needed for rep reward or else crash.
@@ -158,13 +161,13 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
                 }
                 .pickPlanet()
                     ?: kotlin.run {
-                setCurrentStage(Stage.Abandoned, null, null)
+                setCurrentStage(Abandoned, null, null)
                 return false
             }
 
         // Spawn Eugel's fleet near player
         trigger {
-            beginStageTrigger(Stage.EscapeSystem)
+            beginStageTrigger(EscapeSystem)
             val spawnLocation = game.sector.playerFleet
             triggerCreateFleet(
                 FleetSize.LARGER,
@@ -182,34 +185,11 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
             triggerFleetNoJump()
 //            triggerFleetSetNoFactionInName()
             triggerSpawnFleetAtPickedLocation(null, null)
-            triggerCustomAction { context ->
-                // thank you DR https://bitbucket.org/modmafia/underworld/commits/3cdb860a7222d40f2d0d94e5bca0eaf672f5ab6c
-                val firebrand = game.factory.createFleetMember(FleetMemberType.SHIP, "wisp_perseanchronicles_firebrand_Standard")
-
-                val fleet = context.fleet
-                val oldFlagship: FleetMemberAPI = fleet.flagship
-                fleet.fleetData.addFleetMember(firebrand)
-
-                firebrand.captain = PerseanChroniclesNPCs.captainEugel
-                firebrand.shipName = Telos2HubMission.getEugelShipName()
-                oldFlagship.isFlagship = false
-                fleet.fleetData.setFlagship(firebrand)
-                fleet.fleetData.removeFleetMember(oldFlagship)
-
-                fleet.fleetData.sort()
-                fleet.updateCounts()
-                fleet.fleetData.syncIfNeeded()
-                firebrand.repairTracker.cr = firebrand.repairTracker.maxCR
-//                context.fleet?.flagship?.shipName = Telos2HubMission.getEugelShipName()
-                context.fleet.sensorStrength = Float.MAX_VALUE
-                val mem = context.fleet.memoryWithoutUpdate
-                mem.set(MemFlags.MEMORY_KEY_STICK_WITH_PLAYER_IF_ALREADY_TARGET, true)
-                mem.set(MemFlags.MEMORY_KEY_ALLOW_LONG_PURSUIT, true)
-            }
+            triggerCustomAction(EscapeSetupAction())
             triggerMakeFleetIgnoredByOtherFleets()
             triggerMakeFleetIgnoreOtherFleetsExceptPlayer()
 //            triggerFleetAddTags(eugelChaseFleetTag)
-            triggerFleetMakeImportant(null, Stage.EscapeSystem)
+            triggerFleetMakeImportant(null, EscapeSystem)
             triggerSetFleetAlwaysPursue()
             triggerFleetMakeFaster(true, 2, true)
             triggerFleetSetCommander(PerseanChroniclesNPCs.captainEugel)
@@ -219,7 +199,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
 
         // Spawn fleet jump point 1
         trigger {
-            beginStageTrigger(Stage.EscapeSystem)
+            beginStageTrigger(EscapeSystem)
             val spawnLocation = state.primaryTelosPlanet?.starSystem?.jumpPoints?.first()
             triggerCreateFleet(
                 FleetSize.MEDIUM,
@@ -233,19 +213,19 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
             triggerAutoAdjustFleetStrengthModerate()
             triggerMakeFleetIgnoredByOtherFleets()
             triggerMakeNoRepImpact()
-            triggerFleetMakeImportant(null, Stage.EscapeSystem)
+            triggerFleetMakeImportant(null, EscapeSystem)
 //            triggerFleetAddTags(chasingFleetTag)
             triggerFleetNoJump()
             triggerPickLocationAroundEntity(spawnLocation, 1f)
             triggerSpawnFleetAtPickedLocation(null, null)
             triggerOrderFleetPatrol(spawnLocation)
-            triggerFleetInterceptPlayerOnSight(false, Stage.EscapeSystem)
+            triggerFleetInterceptPlayerOnSight(false, EscapeSystem)
             triggerSetFleetAlwaysPursue()
         }
 
         // Spawn fleet jump point 2
         trigger {
-            beginStageTrigger(Stage.EscapeSystem)
+            beginStageTrigger(EscapeSystem)
             val spawnLocation = state.primaryTelosPlanet?.starSystem?.jumpPoints?.get(1)
             triggerCreateFleet(
                 FleetSize.MEDIUM,
@@ -259,77 +239,130 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
             triggerAutoAdjustFleetStrengthModerate()
             triggerMakeNoRepImpact()
             triggerFleetNoJump()
-            triggerFleetMakeImportant(null, Stage.EscapeSystem)
+            triggerFleetMakeImportant(null, EscapeSystem)
             triggerMakeFleetIgnoredByOtherFleets()
 //            triggerFleetAddTags(chasingFleetTag)
             triggerPickLocationAroundEntity(spawnLocation, 1f)
             triggerSpawnFleetAtPickedLocation(null, null)
             triggerOrderFleetPatrol(spawnLocation)
-            triggerFleetInterceptPlayerOnSight(false, Stage.EscapeSystem)
+            triggerFleetInterceptPlayerOnSight(false, EscapeSystem)
             triggerSetFleetAlwaysPursue()
         }
 
         // Make jump points the targets and start the script
         trigger {
-            beginStageTrigger(Stage.EscapeSystem)
+            beginStageTrigger(EscapeSystem)
             // Make jump points important
             val jumpPoints = state.primaryTelosPlanet!!.containingLocation.jumpPoints.orEmpty()
             jumpPoints.forEach { jumpPoint ->
-                triggerCustomAction { context -> context.entity = jumpPoint }
-                triggerEntityMakeImportant("$${jumpPoint.id}_importantFlag", Stage.EscapeSystem)
+                triggerCustomAction(SetEntityAction(jumpPoint))
+                triggerEntityMakeImportant("$${jumpPoint.id}_importantFlag", EscapeSystem)
             }
 
-            triggerCustomAction {
-                game.sector.addScript(TelosFightOrFlightScript())
-            }
+            triggerCustomAction(RunFightOrFlightAction())
         }
 
         trigger {
-            beginStageTrigger(Stage.Completed, Stage.CompletedSacrificeShips, Stage.CompletedDefeatedEugel)
-            triggerCustomAction {
-                game.sector.scripts.filterIsInstance<TelosFightOrFlightScript>()
-                    .forEach {
-                        it.done = true
-                        game.sector.scripts.remove(it)
-                    }
-            }
-            triggerCustomAction {
-                game.sector.getStarSystem(MenriSystemCreator.systemBaseName)?.fleets.orEmpty()
-                    .filter { !it.isPlayerFleet }
-                    .forEach {
-                        Misc.clearFlag(it.memoryWithoutUpdate, MemFlags.MEMORY_KEY_MAKE_HOSTILE)
-                        Misc.makeNonHostileToFaction(it, game.sector.playerFaction.id, Float.POSITIVE_INFINITY)
-                    }
-            }
+            beginStageTrigger(Completed, CompletedSacrificeShips, CompletedDefeatedEugel)
+            triggerCustomAction(RemoveightOrFlightScriptsAction())
+            triggerCustomAction(OnCompletedAction())
         }
 
         trigger {
-            beginStageTrigger(Stage.CompletedSacrificeShips)
-            triggerCustomAction {
-                MagicAchievementManager.getInstance().completeAchievement(Achievements.EugelCapitulationAchievement::class.java)
-            }
+            beginStageTrigger(CompletedSacrificeShips)
+            triggerCustomAction(OnCapitulatedAction())
         }
 
         trigger {
-            beginStageTrigger(Stage.CompletedDefeatedEugel)
-            triggerCustomAction {
-                MagicAchievementManager.getInstance().completeAchievement(Achievements.DefeatedEugelEarlyAchievement::class.java)
-                MagicAchievementManager.getInstance().completeAchievement(Achievements.DefeatedEugelAchievement::class.java)
-            }
+            beginStageTrigger(CompletedDefeatedEugel)
+            triggerCustomAction(OnDefeatedEugelAction())
         }
 
         return true
+    }
+    
+    class RunFightOrFlightAction : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext) {
+            game.sector.addScript(TelosFightOrFlightScript())
+        }
+    }
+
+    class OnCompletedAction : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext) {
+            game.sector.getStarSystem(MenriSystemCreator.systemBaseName)?.fleets.orEmpty()
+                .filter { !it.isPlayerFleet }
+                .forEach {
+                    Misc.clearFlag(it.memoryWithoutUpdate, MemFlags.MEMORY_KEY_MAKE_HOSTILE)
+                    Misc.makeNonHostileToFaction(it, game.sector.playerFaction.id, Float.POSITIVE_INFINITY)
+                }
+        }
+    }
+
+    class OnCapitulatedAction : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext) {
+            MagicAchievementManager.getInstance().completeAchievement(Achievements.EugelCapitulationAchievement::class.java)
+        }
+    }
+
+    class OnDefeatedEugelAction : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext) {
+            MagicAchievementManager.getInstance().completeAchievement(Achievements.DefeatedEugelEarlyAchievement::class.java)
+            MagicAchievementManager.getInstance().completeAchievement(Achievements.DefeatedEugelAchievement::class.java)
+        }
+    }
+
+    class RemoveightOrFlightScriptsAction : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext) {
+            game.sector.scripts.filterIsInstance<TelosFightOrFlightScript>()
+            .forEach {
+                it.done = true
+                game.sector.scripts.remove(it)
+            }
+        }
+    }
+    
+    class SetEntityAction(val entity: SectorEntityToken)  : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext) {
+            context.entity = entity
+        }
+    }
+
+    class EscapeSetupAction : MissionTrigger.TriggerAction {
+        override fun doAction(context: MissionTrigger.TriggerActionContext) {
+            // thank you DR https://bitbucket.org/modmafia/underworld/commits/3cdb860a7222d40f2d0d94e5bca0eaf672f5ab6c
+            val firebrand = game.factory.createFleetMember(FleetMemberType.SHIP, "wisp_perseanchronicles_firebrand_Standard")
+
+            val fleet = context.fleet
+            val oldFlagship: FleetMemberAPI = fleet.flagship
+            fleet.fleetData.addFleetMember(firebrand)
+
+            firebrand.captain = PerseanChroniclesNPCs.captainEugel
+            firebrand.shipName = Telos2HubMission.getEugelShipName()
+            oldFlagship.isFlagship = false
+            fleet.fleetData.setFlagship(firebrand)
+            fleet.fleetData.removeFleetMember(oldFlagship)
+
+            fleet.fleetData.sort()
+            fleet.updateCounts()
+            fleet.fleetData.syncIfNeeded()
+            firebrand.repairTracker.cr = firebrand.repairTracker.maxCR
+//                context.fleet?.flagship?.shipName = Telos2HubMission.getEugelShipName()
+            context.fleet.sensorStrength = Float.MAX_VALUE
+            val mem = context.fleet.memoryWithoutUpdate
+            mem.set(MemFlags.MEMORY_KEY_STICK_WITH_PLAYER_IF_ALREADY_TARGET, true)
+            mem.set(MemFlags.MEMORY_KEY_ALLOW_LONG_PURSUIT, true)
+        }
     }
 
     override fun acceptImpl(dialog: InteractionDialogAPI?, memoryMap: MutableMap<String, MemoryAPI>?) {
         super.acceptImpl(dialog, memoryMap)
 
         state.startDateMillis = game.sector.clock.timestamp
-        setCurrentStage(Stage.GoToPlanet, null, null)
+        setCurrentStage(GoToPlanet, null, null)
         makeImportant(
             state.primaryTelosPlanet,
             null,
-            Stage.GoToPlanet,
+            GoToPlanet,
         )
         makePrimaryObjective(state.primaryTelosPlanet)
     }
@@ -345,7 +378,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
     override fun advanceImpl(amount: Float) {
         super.advanceImpl(amount)
 
-        if (currentStage == Stage.EscapeSystem) {
+        if (currentStage == EscapeSystem) {
             // Detect when player escapes
             if (game.sector.playerFleet.containingLocation != getMenriSystem()) {
                 if (Misc.getNearbyFleets(game.sector.playerFleet, 1000f).none()) {
@@ -356,8 +389,8 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
 
         // Music handling
         if (currentStage.equalsAny(
-                Stage.EscapeSystemForDisplay,
-                Stage.EscapeSystem
+                EscapeSystemForDisplay,
+                EscapeSystem
             ) && game.sector.playerFleet.containingLocation == getMenriSystem()
         ) {
             val isTalkingToEugel =
@@ -382,7 +415,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
 
         if (eugelFleetNow?.flagship == null) {
             state.defeatedEugel = true
-            setCurrentStage(Stage.CompletedDefeatedEugel, null, null)
+            setCurrentStage(CompletedDefeatedEugel, null, null)
         }
     }
 
@@ -408,7 +441,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
         return when {
             interactionTarget.id == state.primaryTelosPlanet?.id -> {
                 when (currentStage) {
-                    Stage.GoToPlanet -> PluginPick(
+                    GoToPlanet -> PluginPick(
                         Telos3LandingDialog().build(),
                         CampaignPlugin.PickPriority.MOD_SPECIFIC
                     )
@@ -442,43 +475,43 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
 
     override fun addNextStepText(info: TooltipMakerAPI, tc: Color, pad: Float): Boolean {
         return when (currentStage as Stage) {
-            Stage.GoToPlanet -> {
+            GoToPlanet -> {
                 info.addPara(padding = pad, textColor = Misc.getGrayColor()) {
                     part3Json.query<String>("/stages/goToPlanet/intel/subtitle").qgFormat()
                 }
                 true
             }
 
-            Stage.EscapeSystemForDisplay,
-            Stage.EscapeSystem -> {
+            EscapeSystemForDisplay,
+            EscapeSystem -> {
                 info.addPara(padding = pad, textColor = Misc.getGrayColor()) {
                     part3Json.query<String>("/stages/escape/intel/subtitle").qgFormat()
                 }
                 true
             }
 
-            Stage.CompletedSacrificeShips -> {
+            CompletedSacrificeShips -> {
                 info.addPara(padding = pad, textColor = Misc.getGrayColor()) {
                     part3Json.query<String>("/stages/completedSacrificeShips/intel/subtitle").qgFormat()
                 }
                 true
             }
 
-            Stage.Completed -> {
+            Completed -> {
                 info.addPara(padding = pad, textColor = Misc.getGrayColor()) {
                     part3Json.query<String>("/stages/escape/intel/subtitle").qgFormat()
                 }
                 true
             }
 
-            Stage.CompletedDefeatedEugel -> {
+            CompletedDefeatedEugel -> {
                 info.addPara(padding = pad, textColor = Misc.getGrayColor()) {
                     part3Json.query<String>("/stages/defeatedEugel/intel/subtitle").qgFormat()
                 }
                 true
             }
 
-            Stage.Abandoned -> {
+            Abandoned -> {
                 true
             }
         }
@@ -486,28 +519,28 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
 
     override fun addDescriptionForCurrentStage(info: TooltipMakerAPI, width: Float, height: Float) {
         when (currentStage as Stage) {
-            Stage.GoToPlanet -> {
+            GoToPlanet -> {
                 info.addPara { part3Json.query<String>("/stages/goToPlanet/intel/desc").qgFormat() }
             }
 
-            Stage.EscapeSystemForDisplay,
-            Stage.EscapeSystem -> {
+            EscapeSystemForDisplay,
+            EscapeSystem -> {
                 info.addPara { part3Json.query<String>("/stages/escape/intel/desc").qgFormat() }
             }
 
-            Stage.CompletedSacrificeShips -> {
+            CompletedSacrificeShips -> {
                 info.addPara { part3Json.query<String>("/stages/completedSacrificeShips/intel/desc").qgFormat() }
             }
 
-            Stage.Completed -> {
+            Completed -> {
                 info.addPara { part3Json.query<String>("/stages/escape/intel/desc").qgFormat() }
             }
 
-            Stage.CompletedDefeatedEugel -> {
+            CompletedDefeatedEugel -> {
                 info.addPara { part3Json.query<String>("/stages/defeatedEugel/intel/desc").qgFormat() }
             }
 
-            Stage.Abandoned -> {}
+            Abandoned -> {}
         }
             .also { } // force exhaustive when
     }

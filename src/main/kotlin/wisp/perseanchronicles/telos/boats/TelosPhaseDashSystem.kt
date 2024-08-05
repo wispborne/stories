@@ -8,7 +8,6 @@ import com.fs.starfarer.api.impl.combat.BaseShipSystemScript
 import com.fs.starfarer.api.impl.combat.PhaseCloakStats
 import com.fs.starfarer.api.plugins.ShipSystemStatsScript
 import wisp.perseanchronicles.game
-import wisp.questgiver.wispLib.Easing
 
 class TelosPhaseDashSystem : BaseShipSystemScript() {
     companion object {

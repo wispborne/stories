@@ -87,7 +87,7 @@ wisp_perseanchronicles:
                   a glowing blue and others nearly translucent. It looks small, fast, and dangerous.'
                 - 'There are no visible engines and you reason that the plating may somehow serve the same purpose.'
                 - 'A ramp unfolds from the belly of the ship, all smooth elegance, and
-              Karengo climbs inside. You follow, soft lighting illuminating a polished
+              Karengo climbs inside. You follow him through the airlock to find soft lighting gently illuminating a polished
               corridor.'
               options:
                 - text: 'Explore the ship'

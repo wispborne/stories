@@ -68,7 +68,7 @@
             },
             "pages" : [ {
               "id" : "1.1",
-              "paras" : [ "Your navigation officer waves a hand to get your attention. \"Captain, we’re in the right area for dropoff of the,\" they glance at their screen, \"uh, ASPIRARDs. I’ll have the cargo guys push it outside.\"", "The container drifts away from the hull, then splits apart with a simulated ‘whoosh’. Sensors detect a coded hyperwave burst and, moments later, ==${telosCredits}== appears in your account.", "Scores of drones rush out and stream in what must be the direction of old Earth. Details on the project were scarce. How long will they take to reach their destination? What are they expecting to find? Why send drones looking now?" ],
+              "paras" : [ "Your navigation officer waves a hand to get your attention. \"Captain, we’re in the right area for dropoff of the,\" they glance at their screen, \"uh, ASPIRARDs. I’ll have the cargo guys push it outside.\"", "The container drifts away from the hull, then splits apart with a simulated ‘whoosh’. Sensors detect a coded hyperwave burst and, moments later, ==${telosCredits}== appear in your account.", "Scores of drones rush out and stream in what must be the direction of old Earth. Details on the project were scarce. How long will they take to reach their destination? What are they expecting to find? Why send drones looking now?" ],
               "options" : [ {
                 "text" : "Continue",
                 "goToPage" : "1"

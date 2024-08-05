@@ -2,6 +2,8 @@ package wisp.perseanchronicles.telos
 
 import com.fs.starfarer.api.util.Misc
 import org.lazywizard.console.BaseCommand
+import org.lazywizard.console.Console
+import wisp.perseanchronicles.dangerousGames.pt2_depths.DepthsHubMission
 import wisp.perseanchronicles.game
 import wisp.perseanchronicles.telos.pt1_deliveryToEarth.Telos1HubMission
 import wisp.perseanchronicles.telos.pt2_dart.Telos2HubMission
@@ -12,6 +14,11 @@ class StartTelosQuestCommand : BaseCommand {
     override fun runCommand(args: String, context: BaseCommand.CommandContext): BaseCommand.CommandResult {
         if (!context.isInCampaign) {
             return BaseCommand.CommandResult.WRONG_CONTEXT
+        }
+
+        if (DepthsHubMission.state.completeDateInMillis == null) {
+            Console.showMessage("You must complete the first two Karengo quests (Dragons & Depths) before starting the Telos quest.");
+            return BaseCommand.CommandResult.ERROR
         }
 
         Telos1HubMission.state.map.clear()

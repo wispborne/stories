@@ -18,6 +18,7 @@ Version 3.1.0
   - Telos: Able to talk the pirate down multiple times so they start with 1% CR.
   - Telos: Credit reward now scales based on distance.
   - Telos: Fixed Varas sharing phase dash cooldown state.
+  - Telos: Karengo can no longer walk without a vacsuit on barren planets. To your knowledge.
 - Changed
   - Firebrand sprite coloration improvements.
 

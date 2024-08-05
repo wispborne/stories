@@ -1,8 +1,8 @@
 package wisp.perseanchronicles.telos.pt3_arrow
 
+import Easing
 import com.fs.starfarer.api.EveryFrameScript
 import wisp.perseanchronicles.game
-import wisp.questgiver.wispLib.Easing
 
 class SmoothScrollPlayerCampaignZoomScript(
     val endingZoom: Float,

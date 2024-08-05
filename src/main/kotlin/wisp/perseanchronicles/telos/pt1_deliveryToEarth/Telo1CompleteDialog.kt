@@ -4,6 +4,7 @@ import org.json.JSONObject
 import wisp.perseanchronicles.common.PerseanChroniclesNPCs
 import wisp.perseanchronicles.game
 import wisp.perseanchronicles.telos.pt2_dart.Telos2HubMission
+import wisp.questgiver.v2.IInteractionLogic
 import wisp.questgiver.v2.InteractionDialogLogic
 import wisp.questgiver.v2.json.PagesFromJson
 import wisp.questgiver.v2.json.query
@@ -14,7 +15,7 @@ class Telo1CompleteDialog(
     mission: Telos1HubMission = game.sector.intelManager.findFirst()!!
 ) : InteractionDialogLogic<Telo1CompleteDialog>(
     onInteractionStarted = {
-
+        this.dialog.visualPanel.showImagePortion(IInteractionLogic.Illustration("wisp_perseanchronicles_telos", "shipInSpace"))
     },
     pages = PagesFromJson(
         pagesJson = stageJson.query("/pages"),
