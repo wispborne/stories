@@ -93,9 +93,9 @@ class TelosEtherNetworkedHullmod : BaseHullMod() {
         tooltip.addSectionHeading(
             /* str = */ "Hullshield",
             /* textColor = */
-            Misc.getGrayColor(),
+            if (hasEtherOfficer) game.sector.getFaction(TelosCommon.FACTION_TELOS_ID).color else Misc.getGrayColor(),
             /* bgColor = */
-            if (hasEtherOfficer) Misc.setAlpha(Misc.scaleColorOnly(Misc.getNegativeHighlightColor(), 0.4f), 175)
+            if (hasEtherOfficer) Misc.setAlpha(Misc.scaleColorOnly(game.sector.getFaction(TelosCommon.FACTION_TELOS_ID).brightUIColor, 0.4f), 175)
             else Misc.setAlpha(
                 Misc.scaleColorOnly(
                     Misc.getGrayColor(),

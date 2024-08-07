@@ -57,7 +57,7 @@
               } ]
             }, {
               "id" : "5-noEther",
-              "paras" : [ "You search for a word to describe the frigate sitting in the hangar and finally settle on one: svelte.", "The high-tech hull is almost entirely coated with a sleek, semi-opaque shell, some parts a glowing blue and others nearly translucent. It looks small, fast, and dangerous.", "There are no visible engines and you reason that the plating may somehow serve the same purpose.", "A ramp unfolds from the belly of the ship, all smooth elegance, and Karengo climbs inside. You follow, soft lighting illuminating a polished corridor." ],
+              "paras" : [ "You search for a word to describe the frigate sitting in the hangar and finally settle on one: svelte.", "The high-tech hull is almost entirely coated with a sleek, semi-opaque shell, some parts a glowing blue and others nearly translucent. It looks small, fast, and dangerous.", "There are no visible engines and you reason that the plating may somehow serve the same purpose.", "A ramp unfolds from the belly of the ship, all smooth elegance, and Karengo climbs inside. You follow him through the airlock to find soft lighting gently illuminating a polished corridor." ],
               "options" : [ {
                 "text" : "Explore the ship",
                 "goToPage" : "5.1-noEther"

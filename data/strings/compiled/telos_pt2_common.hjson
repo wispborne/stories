@@ -20,7 +20,7 @@
             },
             "pages" : [ {
               "id" : "1",
-              "paras" : [ "Your shuttle traces an arc down to the planet’s surface, following the pulse of the distress signal. Surface scans reveal the ruins of a colony and evidence of orbital bombardment, though nothing is recorded in the - admittedly unreliable - fleet datastore.", "As you step outside, still pondering the ruins, your thoughts are interrupted by Karengo himself, striding purposefully toward the cooling shuttle in his weathered duster - confirming the ship instruments’ classification of the atmosphere as “env-suit optional.”" ],
+              "paras" : [ "Your shuttle traces an arc down to the planet’s surface, following the pulse of the distress signal. Surface scans reveal the ruins of a colony and evidence of orbital bombardment, though nothing is recorded in the - admittedly unreliable - fleet datastore.", "As you step outside, still pondering the ruins, your thoughts are interrupted by Karengo himself, striding purposefully toward the cooling shuttle in an orange high-vis vacsuit.”" ],
               "options" : [ {
                 "text" : "Continue",
                 "goToPage" : "1.5"
@@ -81,7 +81,7 @@
               }
             }, {
               "id" : "5",
-              "paras" : [ "Karengo lowers his voice theatrically and glances around, as if ensuring there are no eavesdroppers.", "“My source says this here was a ==Telos== base.”", "At your blank look, he continues. “Telos…one of the old Tri-Tachyon research branches the Hegemony erased. They created this Ether goo” - he taps a finger against the gray tube - “then left to live out away from the Core Worlds. And then the Hegemony hunted ‘em down and purged ‘em from history. Gone.”" ],
+              "paras" : [ "Karengo lowers his voice theatrically and glances around, as if ensuring there are no eavesdroppers.", "“My source says this here was a ==Telos== base.”", "At your blank look, he continues. “Telos…one of the old Tri-Tachyon research branches the Hegemony erased. They created this Ether goo” - he taps a gloved finger against the gray tube - “then left to live out away from the Core Worlds. And then the Hegemony hunted ‘em down and purged ‘em from history. Gone.”" ],
               "options" : [ {
                 "text" : "\"But, why?\"",
                 "goToPage" : "6"
@@ -94,7 +94,7 @@
               }
             }, {
               "id" : "7",
-              "paras" : [ "You sink the plunger deep into your right leg. The gray liquid drains from the barrel and you feel a wave of cold spreading from the site. Karengo watches intently, uncharacteristically quiet, as you take a seat on a stair and wait.", "You black out." ],
+              "paras" : [ "You stab the plunger through a suit joint and deep into your right leg. The gray liquid drains from the barrel and you feel a wave of cold spreading from the site. Karengo watches intently, uncharacteristically quiet, as you take a seat on a stair and wait.", "You black out." ],
               "options" : [ {
                 "text" : "Continue",
                 "goToPage" : "8"
@@ -125,7 +125,7 @@
               } ]
             }, {
               "id" : "10",
-              "paras" : [ "You shrug casually at Karengo’s confusion. For the first time since you met, you’re a step ahead of the adventurer. You take a moment to savor it." ],
+              "paras" : [ "You shrug casually at Karengo’s confusion, taking the extra moment to savor it." ],
               "options" : [ {
                 "text" : "Continue",
                 "goToPage" : "11"
@@ -146,7 +146,7 @@
               } ]
             }, {
               "id" : "12",
-              "paras" : [ "Karengo tucks his syringe of Ether into one of the endless pockets in his tactical jacket and you follow suit, the cylinder pressing against your ribs. “According to my contact,” he says, glancing around, “there is tunnel access to a hangar from this room.” At your raised eyebrows, he adds, “Somewhere.”" ],
+              "paras" : [ "Karengo tucks his syringe of Ether into one of the endless pockets in his adventuring vacsuit and you follow suit, the cylinder pressing against your ribs. “According to my contact,” he says, glancing around, “there is tunnel access to a hangar from this room.” At your querying look, he adds, “Somewhere.”" ],
               "options" : [ {
                 "text" : "Continue",
                 "goToPage" : "12.1"
@@ -180,7 +180,7 @@
             "quotes" : [ "\"This is Captain Eugel of the Hegemony. Power down your weapons and forbidden technology.\"", "\"I have orders to eliminate all threats to the Domain. Your course is a danger to us all.\"", "\"You cannot play God without consequence. I am that consequence.\"", "\"I take no joy in ending your march to technological armageddon. But I will end it.\"", "\"We can’t expect Ludd to do all the work.\"", "\"A brotherhood of Man is a worthy goal, but technology is not the solution.\"", "\"This is not a battle you can win, Telos. Your little experiment is over.\"", "\"Let it end. The record will note that you fought valiantly.\"" ],
             "victoryQuote" : "\"And so another would-be Prometheus falls. Some arts are best left to the Creator.\"",
             "cheaterTaunts" : {
-              "cheater1" : [ "A grin plastered on your face, you blow up ship after ship without firing a shot.", "\"lol,\" you think to yourself, wiping pizza grease from your neck. \"lmao. dumb modder.\"" ],
+              "cheater1" : [ "A grin plastered on your face, you blow up ship after ship without firing a shot.", "\"lol,\" you think to yourself, wiping pizza grease from the hair under your chin. \"lmao. dumb modder.\"" ],
               "cheater2" : [ "The final enemy ship explodes, untouched.", "Cheating complete, you push back from the keyboard to give a mock bow to your admiring fumo collection." ],
               "cheater3" : [ "This action will have consequences." ],
               "cheater4" : [ "The wall of anime posters look down at you with vapid, disapproving smiles.", "\"What?\" you ask them, \"It's not cheating if the battle was rigged.\"", "\"What was that?!\" your mom shouts from upstairs. \"Dinner's almost ready!\"", "\"Coming!\", you shout back, focusing on Starsector." ],

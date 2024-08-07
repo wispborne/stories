@@ -17,7 +17,6 @@ import com.fs.starfarer.api.impl.campaign.missions.hub.ReqMode
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.Misc
-import com.fs.starfarer.campaign.JumpPoint
 import com.fs.starfarer.campaign.fleet.CampaignFleet
 import org.json.JSONObject
 import org.magiclib.achievements.MagicAchievementManager
@@ -71,6 +70,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
         var viewedWhat: Boolean? by map
         var viewedWhen: Boolean? by map
         var viewedWhere: Boolean? by map
+        var eugelFleetId: String? by map
 
         var talkedWithEugel: Boolean? by map
         var scuttledTelosShips: Boolean? by map
@@ -264,7 +264,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
 
         trigger {
             beginStageTrigger(Completed, CompletedSacrificeShips, CompletedDefeatedEugel)
-            triggerCustomAction(RemoveightOrFlightScriptsAction())
+            triggerCustomAction(RemoveFightOrFlightScriptsAction())
             triggerCustomAction(OnCompletedAction())
         }
 
@@ -295,6 +295,11 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
                     Misc.clearFlag(it.memoryWithoutUpdate, MemFlags.MEMORY_KEY_MAKE_HOSTILE)
                     Misc.makeNonHostileToFaction(it, game.sector.playerFaction.id, Float.POSITIVE_INFINITY)
                 }
+            // Despawn Eugel so player can't come back and beat him after the mission is over.
+            // Lazy approach, but AHHHHHH INTELLIJ AHHHHHHHHHHHHHHHHHHH
+            game.sector.getStarSystem(MenriSystemCreator.systemBaseName)?.fleets.orEmpty()
+                .firstOrNull { it.id == state.eugelFleetId }
+                ?.run { this.despawn() }
         }
     }
 
@@ -311,7 +316,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
         }
     }
 
-    class RemoveightOrFlightScriptsAction : MissionTrigger.TriggerAction {
+    class RemoveFightOrFlightScriptsAction : MissionTrigger.TriggerAction {
         override fun doAction(context: MissionTrigger.TriggerActionContext) {
             game.sector.scripts.filterIsInstance<TelosFightOrFlightScript>()
             .forEach {
@@ -345,6 +350,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
             fleet.fleetData.sort()
             fleet.updateCounts()
             fleet.fleetData.syncIfNeeded()
+            state.eugelFleetId = fleet.id
             firebrand.repairTracker.cr = firebrand.repairTracker.maxCR
 //                context.fleet?.flagship?.shipName = Telos2HubMission.getEugelShipName()
             context.fleet.sensorStrength = Float.MAX_VALUE
@@ -533,7 +539,7 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
             }
 
             Completed -> {
-                info.addPara { part3Json.query<String>("/stages/escape/intel/desc").qgFormat() }
+                info.addPara { part3Json.query<String>("/stages/escaped/intel/desc").qgFormat() }
             }
 
             CompletedDefeatedEugel -> {

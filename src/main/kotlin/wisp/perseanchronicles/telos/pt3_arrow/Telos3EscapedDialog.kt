@@ -2,10 +2,12 @@ package wisp.perseanchronicles.telos.pt3_arrow
 
 import org.json.JSONObject
 import wisp.perseanchronicles.game
+import wisp.questgiver.v2.IInteractionLogic
 import wisp.questgiver.v2.InteractionDialogLogic
 import wisp.questgiver.v2.json.PagesFromJson
 import wisp.questgiver.v2.json.query
 import wisp.questgiver.wispLib.findFirst
+import wisp.questgiver.wispLib.qgFormat
 
 class Telos3EscapedDialog(
     stageJson: JSONObject = Telos3HubMission.part3Json.query("/stages/escaped"),
@@ -30,17 +32,19 @@ class Telos3EscapedDialog(
     pages = PagesFromJson(
         pagesJson = stageJson.query("/pages"),
         onPageShownHandlersByPageId = mapOf(
+            "1-escaped" to {
+              dialog.visualPanel.showImagePortion(IInteractionLogic.Illustration("illustrations", "jump_point_hyper"))
+            },
             "3-explanation" to {
                 val page = navigator.currentPage()!!
                 if (game.memory["\$gaPZ_scannedZiggurat"] == true) {
-                    para { page.extraData["response-zigg"] as String }
+                    para { (page.extraData["response-zigg"] as String).qgFormat() }
                 } else {
-                    para { page.extraData["response-noZigg"] as String }
+                    para { (page.extraData["response-noZigg"] as String).qgFormat() }
                 }
             },
             "4-cliffhanger" to {
                 mission.setCurrentStage(Telos3HubMission.Stage.Completed, dialog, null)
-
             }
         ),
         optionConfigurator = { options ->

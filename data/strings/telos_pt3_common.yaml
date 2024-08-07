@@ -12,6 +12,7 @@ wisp_perseanchronicles:
         
         Hover over the ability icon to view a list of all objects. You may need to add it to your ability bar.
         
+        
         Now, escape!'
       stages:
         goToPlanet:
@@ -316,7 +317,7 @@ wisp_perseanchronicles:
                 - '"My name is Knight-Captain Eugel." Entire worlds could be lost between the creases of the man''s wizened face, 
                 but his eyes are shrewd and cold.'
                 - '"Who you are does not matter. I had hoped that the past could stay the past without needing me to intervene, 
-                but it seems not. Digging through ${telosPt1Stg1DestSystem} was a mistake. Coming here was folly."'
+                but it seems not. Digging through that other Telos base was a mistake. Coming to this system was folly."'
               options:
                 - text: 'Continue'
                   goToPage: '14-debrief-who-eugel2'
@@ -328,7 +329,7 @@ wisp_perseanchronicles:
               options:
                 - text: '"Who was that?"'
                   goToPage: '14-debrief-who-eugel3-who'
-                - text: '"I know that man."'
+                - text: '=="I know that man."=='
                   goToPage: '14-debrief-who-eugel3-remember'
 
             - id: '14-debrief-who-eugel3-who'
@@ -761,8 +762,8 @@ wisp_perseanchronicles:
                 goToPage: '4-cliffhanger'
 
             - id: '3-explanation'
-              response-zigg: 'The man pales. "First that phase ship, now this. We find strange and dangerous machinery, ${PlayerSirOrMadam}.'
-              response-noZigg: 'The man pales, then smiles grimly. "Better you than me, ${PlayerSirOrMadam}. It''s an honor to serve.'
+              response-zigg: 'The man pales. "First that phase ship, now this. We find strange and dangerous machinery, ${playerSirOrMadam}.'
+              response-noZigg: 'The man pales, then smiles grimly. "Better you than me, ${playerSirOrMadam}. It''s an honor to serve.'
               onPageShown:
                 goToPage: '3-explanation-finish'
 
@@ -773,7 +774,8 @@ wisp_perseanchronicles:
                 goToPage: '4-cliffhanger'
 
             - id: '4-cliffhanger'
-              text: '==This concludes Phase 2 of the Telos storyline. More to come at a later date.=='
+              paras:
+                - '==This concludes Phase 2 of the Telos storyline. More to come in a future patch. Hopefully.=='
               options:
                 - text: 'Close'
                   id: 'endOfPhase2'

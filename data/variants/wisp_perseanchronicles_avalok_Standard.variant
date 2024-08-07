@@ -7,7 +7,7 @@
   "goalVariant": true,
   "hullMods": [ ],
   "modules": [
-    { "WS0019": "wisp_perseanchronicles_avalok_module_Standard" }
+#    { "WS0019": "wisp_perseanchronicles_avalok_module_Standard" }
   ],
   "permaMods": [ ],
   "sMods": [ ],

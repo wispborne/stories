@@ -45,6 +45,6 @@
     },
   ],
   "modules": [
-    { "WS0019": "wisp_perseanchronicles_itesh_module_Standard" },
+#    { "WS0019": "wisp_perseanchronicles_itesh_module_Standard" },
   ]
 }

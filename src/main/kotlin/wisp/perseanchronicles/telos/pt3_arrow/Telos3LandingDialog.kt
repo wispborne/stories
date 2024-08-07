@@ -111,6 +111,10 @@ class Telos3LandingDialog(
                     Telos3HubMission.state.retrievedSupplies = true
                 }
             },
+            "7-shipyard-itesh" to {
+                dialog.visualPanel.showFleetMemberInfo(game.settings.getVariant("wisp_perseanchronicles_itesh_Standard")
+                    .let { game.factory.createFleetMember(FleetMemberType.SHIP, it) })
+            },
             "10-disconnected" to {
                 // Give Itesh
                 val itesh = game.settings.getVariant("wisp_perseanchronicles_itesh_Standard")
@@ -128,7 +132,10 @@ class Telos3LandingDialog(
                     repairTracker.cr = .7f
                 }
                 dialog.textPanel.addFleetMemberGainText(itesh)
-                dialog.visualPanel.showFleetMemberInfo(itesh)
+            },
+            "13-getting-to-bridge" to {
+                // Vanilla illustration, not in Persean Chronicles.
+                dialog.visualPanel.showImagePortion(IInteractionLogic.Illustration("illustrations", "free_orbit"))
             },
             "14-question-bridge" to {
                 if (Telos3HubMission.state.viewedWho == true
