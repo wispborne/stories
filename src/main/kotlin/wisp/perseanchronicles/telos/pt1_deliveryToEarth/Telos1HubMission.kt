@@ -117,6 +117,7 @@ class Telos1HubMission : QGHubMissionWithBarEvent(MISSION_ID) {
             .requirePlanetNotStar()
             .preferMarketConditions(ReqMode.ALL, Conditions.HABITABLE)
             .preferEntityUndiscovered()
+            .preferPlanetUnpopulated()
 //            .preferPlanetWithRuins()
             // If we're in Perseus Arm and up faces in direction of galactic spin, Sol is to bottom-left.
             .preferSystemInDirectionFrom(Vector2f(0f, 0f), 220f, 45f)

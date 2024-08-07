@@ -7,6 +7,7 @@ Version 3.1.0
     - Console command: `infinite`. Runs both `infinitesupplies` and `infinitefuel`.
     - Console command: `allall`. Places all hulls, weapons, wings, and commodities into storage. Learns all blueprints and hullmods.
 - Fixed
+  - "Error" in the game log that wasn't actually an error.
   - Missing text in quest intel after they'd been completed (thanks to toopok4k3).
   - Various small text improvements in too many places to list.
   - Dragons: Reward is now shown upfront and the "bonus" that you always get at the end is now a surprise.
@@ -14,18 +15,20 @@ Version 3.1.0
   - Depths: Karengo avoiding non-existent local government during Depths.
   - Depths: Item reward now generates cargo pods if you don't immediately take everything.
   - Depths: Credit reward now scales based on distance.
+  - Telos: Fixed the combat map size persisting after the flashback (hopefully).
   - Telos: "hanger" -> "hangar" in lots of places (thanks Histidine).
+  - Telos: Prefers unpopulated planets for the first quest location.
   - Telos: Able to talk the pirate down multiple times so they start with 1% CR.
   - Telos: Credit reward now scales based on distance.
   - Telos: Fixed Varas sharing phase dash cooldown state.
-  - Telos: Karengo can no longer walk without a vacsuit on barren planets. To your knowledge.
+  - Telos: Karengo can no longer walk without a vacsuit on barren planets. As far as you know.
 - Changed
   - Firebrand sprite coloration improvements.
 
 Version 3.0.8
 - Fixed
   - Crash with Progressive Smods enabled after the Telos battle (thanks to Jimminy Crimbles). 
-    - Found a different way to do what I was doing that won't bother other mods anymore. 
+    - Found a different way to do what I was doing that won't bother other mods anymore.
   - Crash when starting Telos if you've started Nirvana before (introduced in 3.0.7).
 - Added
   - Console command `allall` (sibling to `allweapons`, `allhulls`, `allwings`, etc).
