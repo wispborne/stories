@@ -6,7 +6,7 @@
     "utility": "false",
     "version": "3.1.0",
     "description": "Adds a collection of quests to bars around the Persean Sector.",
-    "gameVersion": "0.97a-RC7",
+    "gameVersion": "0.97a-RC11",
     "jars":["jars/PerseanChronicles.jar"],
     "modPlugin":"wisp.perseanchronicles.PerseanChroniclesModPlugin",
     "dependencies": [
