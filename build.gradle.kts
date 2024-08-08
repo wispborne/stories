@@ -10,7 +10,7 @@ val props = Properties().apply {
     load(project.rootProject.file("local.properties").reader())
 }
 
-val modVersion = "3.1.0"
+val modVersion = "4.0.0"
 val starsectorDirectory = props.getProperty("gamePath") //"C:/Program Files (x86)/Fractal Softworks/Starsector"
 val jarFileName = "PerseanChronicles.jar"
 //val questgiverVersion = "4.1.0"

@@ -1,6 +1,7 @@
 ## Changelog
 
-Version 3.1.0
+Version 4.0.0 
+Save-compatible, but needs a new game to properly do the next Telos quest if you've done the first.
 - Added
     - Next quest in the Telos questline.
         - If you have finished the first Telos quest, this one will automatically start.
