@@ -76,7 +76,7 @@ class EthersightAbility : BaseToggleAbility() {
 
         if (!turnedOn) {
             // If player has the ability on, then loads a save where they don't, the max zoom will be wrong, so reset it.
-            // TODO check this for 0.97a
+            // Fixed by 0.97a
             if (game.sector.campaignUI.maxZoomFactor != SmoothScrollPlayerCampaignZoomScript.getVanillaMaxZoom()
                 && game.sector != lastLoadedSector?.get()
                 && game.settings.gameVersion != "0.96a-RC10"

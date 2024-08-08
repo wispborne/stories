@@ -23,6 +23,8 @@ Version 3.1.0
   - Telos: Fixed Varas sharing phase dash cooldown state.
   - Telos: Karengo can no longer walk without a vacsuit on barren planets. As far as you know.
 - Changed
+  - Now requires Java 17 or higher.
+    - Starsector 0.98a will use it by default.
   - Firebrand sprite coloration improvements.
 
 Version 3.0.8

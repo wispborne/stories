@@ -111,8 +111,9 @@ class PerseanChroniclesModPlugin : BaseModPlugin() {
         MagicAchievementManager.getInstance().addAchievementSpecs(Achievements.DefeatedEugelAchievementSpec())
         Questgiver.onGameLoadEnd(newGame)
 
-        // TODO DON'T FORGET THIS
-        if (true) {
+        // DON'T FORGET THIS
+        // YOU DUMBASS YOU FORGOT
+        if (false) {
             game.sector.characterData.addAbility(TelosCommon.ETHER_SIGHT_ID)
             game.sector.playerFleet.addAbility(TelosCommon.ETHER_SIGHT_ID)
         }

@@ -7,7 +7,6 @@ package wisp.perseanchronicles.psychic
 //
 //
 //    override fun updateTextReplacements(text: Text) {
-//        TODO("Not yet implemented")
 //    }
 //
 //    enum class Stage {

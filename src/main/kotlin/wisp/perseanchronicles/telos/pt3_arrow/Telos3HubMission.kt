@@ -139,8 +139,6 @@ class Telos3HubMission : QGHubMission(), FleetEventListener, IQGHubMission {
             .distinct()
             .toList()
 
-        // TODO create planet if it doesn't exist
-        // Must have rings
         state.primaryTelosPlanet = MenriSystemCreator.createMenriSystem()
             ?: SystemFinder()
                 .requireSystemTags(mode = ReqMode.NOT_ANY, Tags.THEME_CORE)
