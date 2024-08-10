@@ -27,10 +27,7 @@ import wisp.perseanchronicles.common.fx.CustomRenderer
 import wisp.perseanchronicles.game
 import wisp.perseanchronicles.telos.pt3_arrow.MenriSystemCreator
 import wisp.perseanchronicles.telos.pt3_arrow.SmoothScrollPlayerCampaignZoomScript
-import wisp.questgiver.wispLib.distanceFromPlayerInHyperspace
-import wisp.questgiver.wispLib.equalsAny
-import wisp.questgiver.wispLib.modify
-import wisp.questgiver.wispLib.random
+import wisp.questgiver.wispLib.*
 import java.awt.Color
 import java.lang.ref.WeakReference
 import java.util.*
@@ -164,7 +161,7 @@ class EthersightAbility : BaseToggleAbility() {
 
     override fun hasTooltip() = true
     override fun isTooltipExpandable() = false
-    override fun isUsable() = game.sector?.playerFleet?.isInHyperspace == false && !isSystemHidden()
+    override fun isUsable() = game.sector?.playerFleet?.isInHyperspace == false && (!isSystemHidden() || game.settings.isDevMode)
 
     override fun createTooltip(tooltip: TooltipMakerAPI?, expanded: Boolean) {
         var status = " (off)"
@@ -192,15 +189,21 @@ class EthersightAbility : BaseToggleAbility() {
 
         val entities = if (systemHidden) emptyList() else getEntitiesInSystem()
         tooltip.addSpacer(pad)
+        if (game.settings.isDevMode)
+            tooltip.addPara(
+                "Being a DEVELOPER, your clarity of mind cuts through any spoiler-tag-induced obstacles. Wow!",
+                Misc.getStoryOptionColor(),
+                pad
+            )
 
         if (entities.isEmpty()) {
-            if (systemHidden)
+            if (systemHidden) {
                 tooltip.addPara(
                     "This system is void of information. You feel somehow more blind than before you first tasted Ether.",
                     Misc.getNegativeHighlightColor(),
                     pad
                 )
-            else {
+            } else {
                 tooltip.addPara(
                     "This system has no objects of note.",
                     Misc.getTextColor(),
@@ -247,9 +250,10 @@ class EthersightAbility : BaseToggleAbility() {
     /**
      * Disable Ethersight in systems with the "hidden" tag (except for Menri).
      */
-    private fun isSystemHidden() =
-        game.sector.playerFleet.starSystem?.hasTag(Tags.THEME_HIDDEN) ?: false
-                && game.sector.playerFleet.starSystem.baseName != MenriSystemCreator.systemBaseName
+    private fun isSystemHidden() = if (game.settings.isDevMode) false
+    else
+        (game.sector.playerFleet.starSystem?.hasTag(Tags.THEME_HIDDEN) ?: false
+                && game.sector.playerFleet.starSystem.baseName != MenriSystemCreator.systemBaseName)
 
     override fun render(layer: CampaignEngineLayers, viewport: ViewportAPI) {
         if (!turnedOn) return
